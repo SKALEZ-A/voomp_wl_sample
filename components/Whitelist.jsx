@@ -20,6 +20,7 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [address, setAddress] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const handleAddressChange = (event) => {
     setAddress(event.target.value.toLowerCase());
@@ -28,6 +29,7 @@ const Contact = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsValid(isValidAddress(address));
+    setSubmitted(true);
   };
 
   const isValidAddress = (address) => addresses.includes(address.toLowerCase());
@@ -51,7 +53,7 @@ const Contact = () => {
 
         <form
           ref={formRef}
-          //   onSubmit={handleSubmit}
+          //onSubmit={(e) => handleSubmit(e)}
           className="mt-12 flex flex-col gap-8"
         >
           <label className="flex flex-col">
@@ -67,18 +69,20 @@ const Contact = () => {
 
           <button
             type="submit"
-            onclick={handleSubmit}
+            onClick={(e) => handleSubmit(e)}
             className="bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary"
           >
             Submit
           </button>
         </form>
 
-        {isValid ? (
-          <p className="text-green-500">Address is whitelisted!</p>
-        ) : address ? (
-          <p className="text-red-500">Address is not whitelisted.</p>
-        ) : null}
+        {address &&
+          submitted &&
+          (isValid ? (
+            <p className="text-green-500">Address is whitelisted!</p>
+          ) : (
+            <p className="text-red-500">Address is not whitelisted.</p>
+          ))}
       </motion.div>
     </div>
   );
