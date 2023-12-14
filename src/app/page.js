@@ -6,6 +6,10 @@ const DynamicWhitelist = dynamic(() => import("../../components/Whitelist"), {
   ssr: false,
 });
 
+const DynamicNavbar = dynamic(() => import("../../components/Navbar"), {
+  ssr: false,
+});
+
 const DynamicStarsCanvas = dynamic(
   () => import("../../components/canvas/Stars"),
   {
@@ -16,6 +20,7 @@ const DynamicStarsCanvas = dynamic(
 export default function Home() {
   return (
     <main className="relative z-0 ">
+      <DynamicNavbar />
       <div className="relative z-0 mb-10 pb-10">
         <DynamicWhitelist />
         <DynamicStarsCanvas />
